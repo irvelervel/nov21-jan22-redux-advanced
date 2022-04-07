@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { useState } from 'react'
 import { setUsernameActionWithThunk } from '../redux/actions'
+import { Alert } from 'react-bootstrap'
 
 // CartIndicator should now connect to the Redux Store
 // so we're going to use the connect() function from react-redux
@@ -18,6 +19,7 @@ const mapStateToProps = (state) => ({
   cartLength: state.cart.products.length,
   // cartLength is now a PROP for CartIndicator!
   username: state.user.name,
+  isError: state.book.isError,
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -26,7 +28,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
 })
 
-const CartIndicator = ({ cartLength, username, setUsername }) => {
+const CartIndicator = ({ cartLength, username, setUsername, isError }) => {
   const navigate = useNavigate()
   const [name, setName] = useState('')
 
@@ -39,7 +41,9 @@ const CartIndicator = ({ cartLength, username, setUsername }) => {
 
   return (
     <div className="ml-auto mt-2">
-      {username ? (
+      {isError ? (
+        <Alert variant="danger">ERROR FETCHING DATA</Alert>
+      ) : username ? (
         <>
           <span className="mr-3">Hello {username}!</span>
           <Button color="primary" onClick={() => navigate('/cart')}>

@@ -3,6 +3,10 @@
 export const ADD_TO_CART = 'ADD_TO_CART'
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 export const SET_USERNAME = 'SET_USERNAME'
+export const GET_BOOKS = 'GET_BOOKS'
+export const GET_BOOKS_ERROR = 'GET_BOOKS_ERROR'
+export const GET_BOOKS_LOADING = 'GET_BOOKS_LOADING'
+export const SET_SELECTED = 'SET_SELECTED'
 
 export const addToCartAction = (book) => ({
   // what is an action? a JS object with at least a 'type' property
@@ -39,7 +43,15 @@ export const setUsernameActionWithThunk = (name) => {
   }
 }
 
-export const getBooks = () => {
+const getBooksErrorAction = () => ({
+  type: GET_BOOKS_ERROR,
+})
+
+const getBooksLoadingAction = () => ({
+  type: GET_BOOKS_LOADING,
+})
+
+export const getBooksAction = () => {
   return async (dispatch, getState) => {
     try {
       let resp = await fetch(
@@ -50,13 +62,23 @@ export const getBooks = () => {
         // this.setState({ books })
         console.log('books from the getBooks action creator!', books)
         // here I'll have to dispatch a successful action!
+        dispatch({
+          type: GET_BOOKS,
+          payload: books,
+        })
+        dispatch(getBooksLoadingAction())
+        // this is an action supposed to fill the stock property in the redux store
       } else {
         console.log('error')
         // from here instead we're going to dispatch another action, an error action!
+        dispatch(getBooksErrorAction())
+        dispatch(getBooksLoadingAction())
       }
     } catch (error) {
       console.log(error)
       // from here instead we're going to dispatch another action, an error action!
+      dispatch(getBooksErrorAction())
+      dispatch(getBooksLoadingAction())
     }
   }
 }
@@ -65,3 +87,8 @@ export const getBooks = () => {
 // the function you are returning gets dispatch as an argument
 // and getState, which can be invoked like this -> getState()
 // that will return you the actual content of the redux store
+
+export const setSelectedAction = (book) => ({
+  type: SET_SELECTED,
+  payload: book,
+})

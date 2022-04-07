@@ -35,6 +35,9 @@ export const initialState = {
       // this should be filled with book objects
       // this time from a Promise, an async operation
     ],
+    selected: null,
+    isError: false,
+    isLoading: true,
   },
 }
 
