@@ -4,7 +4,7 @@ import { FaShoppingCart } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { useState } from 'react'
-import { setUsernameAction } from '../redux/actions'
+import { setUsernameActionWithThunk } from '../redux/actions'
 
 // CartIndicator should now connect to the Redux Store
 // so we're going to use the connect() function from react-redux
@@ -22,7 +22,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setUsername: (name) => {
-    dispatch(setUsernameAction(name))
+    dispatch(setUsernameActionWithThunk(name))
   },
 })
 

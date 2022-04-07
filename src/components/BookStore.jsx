@@ -1,31 +1,21 @@
-import { Component } from "react";
-import BookList from "./BookList";
-import BookDetail from "./BookDetail";
-import { Col, Row } from "react-bootstrap";
+import { Component } from 'react'
+import BookList from './BookList'
+import BookDetail from './BookDetail'
+import { Col, Row } from 'react-bootstrap'
 
 class BookStore extends Component {
   state = {
     books: [],
     bookSelected: null,
-  };
+  }
 
   componentDidMount = async () => {
-    try {
-      let resp = await fetch(
-        "https://striveschool-api.herokuapp.com/food-books"
-      );
-      if (resp.ok) {
-        let books = await resp.json();
-        this.setState({ books });
-      } else {
-        console.log("error");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    // here I'd like to dispatch my getBooks action creator!
+    // so let's connect this component to the Redux Store in order to be able
+    // to dispatch an action
+  }
 
-  changeBook = (book) => this.setState({ bookSelected: book });
+  changeBook = (book) => this.setState({ bookSelected: book })
 
   render() {
     return (
@@ -38,13 +28,11 @@ class BookStore extends Component {
           />
         </Col>
         <Col md={8}>
-          <BookDetail
-            bookSelected={this.state.bookSelected}
-          />
+          <BookDetail bookSelected={this.state.bookSelected} />
         </Col>
       </Row>
-    );
+    )
   }
 }
 
-export default BookStore;
+export default BookStore
